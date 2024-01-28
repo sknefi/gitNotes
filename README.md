@@ -55,3 +55,9 @@ po vytvorení repa na githube sa vrátime na local machine (LM) a pokračujeme
                             - git@github.com:sknefi/gitNotes.git
 
 2.) git remote -v           - overenie referencie LM na github
+
+3.) git push --set-upstream origin main
+    git push -u origin main         
+                            - tieto dva príkazy robia to isté
+                            - u znamená upstream => tu na toto miesto chcem pushovať defaultne
+  

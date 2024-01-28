@@ -60,4 +60,5 @@ po vytvorení repa na githube sa vrátime na local machine (LM) a pokračujeme
     git push -u origin main         
                             - tieto dva príkazy robia to isté
                             - u znamená upstream => tu na toto miesto chcem pushovať defaultne
+                            - tento príkaz sa píše iba raz (keď prvýkrát pushujeme z LM na github), potom stačí iba "git push"
   

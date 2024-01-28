@@ -38,4 +38,18 @@ git push            - pošleme repo na github kde je hostovaný remotne
 ---vytváranie lokálneho repa, 
 vytvoríme si repo na local machine, otvoríme terminál a píšeme:
 
-git init            - inicializácia gitovského repa
+1.) git init                - inicializácia gitovského repa
+
+2.) git commit -m ""        - pripravíme repo na push tým, že ho commitneme
+    
+3.) git push origin master  - teraz to nebude fungovať, pretože na githube, nie je vytvorený repo
+                            - chyba je kvoli origin (predstavuje lokáciu git repa)
+                            - takže .git teraz nevie kam má pushnuť repo => vyhodí chybu 
+
+kvôli tomu, že .git nevie kam má pushnuť repo, najjednodujhší spôsob je ísť na github a vytvoriť tam repo manuálne
+
+po vytvorení repa na githube sa vrátime na local machine (LM) a pokračujeme
+
+1.) git remote add origin "git@github.com:sknefi/gitNotes.git"
+                            - na náš lokálny repo pridáme referenciu na github repozitár
+                            - git@github.com:sknefi/gitNotes.git

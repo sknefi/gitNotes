@@ -35,7 +35,7 @@ git push            - pošleme repo na github kde je hostovaný remotne
                     - master predstavuje branch, na ktorú pushujeme
 
 
----vytváranie lokálneho repa, 
+---vytváranie lokálneho repa, pridanie referencie na github repo, commitnutie repa na LM, pushnutie LM repa---
 vytvoríme si repo na local machine, otvoríme terminál a píšeme:
 
 1.) git init                - inicializácia gitovského repa
@@ -60,5 +60,15 @@ po vytvorení repa na githube sa vrátime na local machine (LM) a pokračujeme
     git push -u origin main         
                             - tieto dva príkazy robia to isté
                             - u znamená upstream => tu na toto miesto chcem pushovať defaultne
-                            - tento príkaz sa píše iba raz (keď prvýkrát pushujeme z LM na github), potom stačí iba "git push"
-  
+
+---tips & tricks---
+git diff                    - rozdiel medzi pôvodným súborom (ten čo je pushnutý/po prípade
+                                stiahnutý z githubu na našej LM) a upraveným súborom (ak sme do   
+                                pôvodného súboru niečo napísali)
+
+git commit -a -m ""           - je to skrátená verzia pre: git commid addAll -m ""
+                            - kde m predstavuje message: git commit addAll message ""
+                            - takže keď napíšeme tento príkaz tak ako prvé sa vykoná:
+                                - 1.) git add .         => git add all
+                                - 2.) git commit -m ""  => zaznamenajú sa zmeny so správou "..."
+                            - 

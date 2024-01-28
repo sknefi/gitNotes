@@ -53,3 +53,5 @@ po vytvorení repa na githube sa vrátime na local machine (LM) a pokračujeme
 1.) git remote add origin "git@github.com:sknefi/gitNotes.git"
                             - na náš lokálny repo pridáme referenciu na github repozitár
                             - git@github.com:sknefi/gitNotes.git
+
+2.) git remote -v           - overenie referencie LM na github

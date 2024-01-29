@@ -19,7 +19,7 @@ GitHub
               ┌──────────────────────┐
       ┏------ | folder kde pracujeme |
       |       └──────────────────────┘
-      |  git add   
+      |  git add 
       |       ┌──────────────────────┐
       └-----> |     staging area     | ------┐
               └──────────────────────┘       |
@@ -71,7 +71,7 @@ git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM
               ┌────────────────────────────────────────────────────────┐
               | h j k l     move LEFT DOWN UP RIGHT                    |
               | w b         move on beggining of RIGHT LEFT _word_     |
-              | gg G        move on START END of a _file_              |    
+              | gg G        move on START END of a _file_              | 
               | 0 $         move START END of a _current line_         |
               | i a         goto insert BEFORE AFTER _cursor_          |
               | o O         goto instert _one line_ UNDER ABOVE        |
@@ -81,7 +81,7 @@ git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM
               | v V         goto visual SELECT CHARACTERS SELECT LINES |
               | / ?         SEARCH FORWARD BACKWARD                    |
               | n N         show NEXT PREVIOUS _result_ from search    |
-              └────────────────────────────────────────────────────────┘
+              └────────────────────────────────────────────────────────┘ 
                       
 
 git log             - vidíme všetky naše commity (najstarší na najnižšie)

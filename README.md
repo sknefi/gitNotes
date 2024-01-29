@@ -1,5 +1,6 @@
-https://www.youtube.com/watch?v=RGOj5yH7evk&t
-https://www.youtube.com/watch?v=_qSB6jN4A3s&list=PLQ8x_VWW6AkuVs1oyWth3lXA4D4jxD_7F
+freecodecamp tutorial -   https://www.youtube.com/watch?v=RGOj5yH7evk&t
+David Šetek tutorail -    https://www.youtube.com/watch?v=_qSB6jN4A3s&list=PLQ8x_VWW6AkuVs1oyWth3lXA4D4jxD_7F
+David Šetek poznámky -    https://docs.google.com/document/d/1iA0e_FcqB6Dwj3fULfedrd_PJavByYYXoIDY_yOupFs/edit
 
 čím lepšie si spíšeš ťahák, tým je menšia šanca, že ho použiješ
 
@@ -40,10 +41,12 @@ rm -rf              - vynútené zmazanie (používa sa na mazanie folderov)
 
 rm -rf .git         - vymaže git z repa v LM
 
+git init            - inicializácia .git do daného repozitára
+
 git status          - zobrazí čo všetky som zmenili v rámci repozitára
                     - keď sa dačo zmení dostaneme v termináli správu "modified"
                     - keď pridáme file v termináli sa vypíše "untracked" to znamená, že .git nepozná
-                    a nepozná tento file (je netrekovaný). Pridáme ho pomocou git add
+                        a nepozná tento file (je netrekovaný). Pridáme ho pomocou git add
 
 git add .
                     - bodka znamená pridaj všetko
@@ -58,6 +61,28 @@ git commit -m ""    - vždy keď commitujeme repo musíme zadať -m "" čo preds
 
 git commit -m "" -m ""      - prvé -m "" predstavuje správu
                             - druhé -m "" predstavuje description
+
+git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM)
+                    - správu môžeme napísať vo vime, v prípade, že sa nám ju nechce písať
+                        v do jedného riadku keď používame " git commit -m "" "
+                    - podstatná vec, ako sa orientovať vo VIMe 
+
+              VIM
+              ┌────────────────────────────────────────────────────────┐
+              | h j k l     move LEFT DOWN UP RIGHT                    |
+              | w b         move on beggining of RIGHT LEFT _word_     |
+              | gg G        move on START END of a _file_              |    
+              | 0 $         move START END of a _current line_         |
+              | i a         goto insert BEFORE AFTER _cursor_          |
+              | o O         goto instert _one line_ UNDER ABOVE        |
+              | x X         delete one character AFTER BEFORE _cursor_ |
+              | dd          delete _current line_                      |
+              | yy p        COPY PASTE _current line_                  |
+              | v V         goto visual SELECT CHARACTERS SELECT LINES |
+              | / ?         SEARCH FORWARD BACKWARD                    |
+              | n N         show NEXT PREVIOUS _result_ from search    |
+              └────────────────────────────────────────────────────────┘
+                      
 
 git log             - vidíme všetky naše commity (najstarší na najnižšie)
                     - vypísanie dlhého hashu pre commit

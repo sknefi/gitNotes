@@ -1,5 +1,5 @@
-SKUSKA 1 2 3 
-
+https://www.youtube.com/watch?v=RGOj5yH7evk&t
+https://www.youtube.com/watch?v=_qSB6jN4A3s&list=PLQ8x_VWW6AkuVs1oyWth3lXA4D4jxD_7F
 
 
 funguje???
@@ -66,9 +66,34 @@ git diff                    - rozdiel medzi pôvodným súborom (ten čo je push
                                 stiahnutý z githubu na našej LM) a upraveným súborom (ak sme do   
                                 pôvodného súboru niečo napísali)
 
-git commit -a -m ""           - je to skrátená verzia pre: git commid addAll -m ""
+git commit -a -m ""         - je to skrátená verzia pre: git commid addAll -m ""
                             - kde m predstavuje message: git commit addAll message ""
                             - takže keď napíšeme tento príkaz tak ako prvé sa vykoná:
                                 - 1.) git add .         => git add all
                                 - 2.) git commit -m ""  => zaznamenajú sa zmeny so správou "..."
-                            - 
+
+
+GIT BRANCHING
+
+MasterBranch = MB (tiež nazývana ako Master, Main, Default, ...)
+FeatureBranch = FB
+
+
+číslo za bodkou predstavuje číslo commitu
+
+
+    MB.1 ------- MB.2 ------- MB.3 ------- MB.4 ------- MB.MERGE
+                               \                         /
+                                \____ FB.1 _____ FB.2 __/ 
+
+
+
+
+
+
+
+
+
+
+
+

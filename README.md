@@ -225,33 +225,44 @@ git merge $branchName
                     - tento typ mergeu sa nazýva fast-forward merge
                     - vyzerá takto:ä
                     
-                  ┏                                                                     ┐
+              ┏                                                                                   ┐
                     MB -> Master Branch
                     FB -> Feature Branch
                     .num -> číslo commitu 
                              ( .1 -> prvý commit
                                .n -> najnovší commit )
-
+                    napr. MB.2 -> Master Branch commit číslo 2
+                  
                     pred mergeom
                     existuje 2 HEADs:
                                   MB.4 je master HEAD
                                   FB.2 je feature HEAD
-                                  
-                    MB.1 ---- MB.2 ---- MB.3 ---- MB.4 
-                                                    \ 
-                                                      \____ FB.1 _____ FB.2
+                     ┏                                                                ┐
+                        MB.1 ---- MB.2 ---- MB.3 ---- MB.4 
+                                                        \ 
+                                                          \____ FB.1 _____ FB.2
+                     └                                                                ┛
                                                       
                     -------------------------------------------------------------------
                     
                     po merge
-                    MB.1 ---- MB.2 ---- MB.3 ---- MB.4 ---- newMB.1 ---- newMB.2
+                     ┏                                                                ┐
+                        MB.1 ---- MB.2 ---- MB.3 ---- MB.4 ---- newMB.1 ---- newMB.2
+                     └                                                                ┛
 
-                    Feature Branche (FB.1 a FB.2) sa stali nové master branche
+                    Feature Branche (FB.1 a FB.2) sa stali nové master commity na Master Branchi
                     newMB.1 = FB.1
                     newMB.2 = FB.2
 
-                    takže teraz existuje iba jeden HEAD a tým je newMB.2 (master HEAD)
-                  └                                                                     ┛
+                    takže teraz Master Branch HEAD = Feature Branch HEAD 
+                    stále sú 2 HEADs, len obe referuju na rovnaký commit (ten posledný)
+
+                    takže keď budeme na master branchi a napíšeme  git log --oneline tak nám 
+                      vypíše, že   newMB.2 (HEAD -> master, Feature Branch)
+                    a keď budeme na Feature branchi tak nám vypíše
+                                   newMB.2 (HEAD -> Feature Branch, master)
+                    
+              └                                                                                   ┛
 
 git push            - pošleme repo na github kde je hostovaný remotne
                     - je presne to isté ako "git push origin master"

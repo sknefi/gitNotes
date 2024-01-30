@@ -9,6 +9,7 @@ Git
   - beží na našej lokálnej mašine (LM)
   - nemusíme mať internet
   - zaznamenáva zmeny kódu lokálne
+    
 GitHub
   - cloud, na kotrý umiestňujeme repozitáre, ktoré obsahujú postupne vyvýjanie nášho projektu
   - použijeme ho v tedy keď chceme mať zálohované súbory / pracujeme v tíme a potrebujeme medzi sebou zdielať kód
@@ -16,7 +17,69 @@ GitHub
 
 HEAD
   - posledný commit v aktuálnej brenchi
+  - majme:
+    
+              sme na Master Branchi.  HEAD->master
+              ┌─────────────────────────┐
+              |      commit MB #n       |  <-- HEAD
+              |      commit MB #...     |
+              |      commit MB #3       |
+              |      commit MB #2       |
+              |      commit MB #1       |
+              └─────────────────────────┘
 
+              vytvorenie Feature Branch s názvom bug
+              sme na Master Branchi  HEAD->(master, bug)
+              ┌─────────────────────────┐
+              |     created FB #1       | <-- HEAD
+              |      commit MB #n       | <-- HEAD
+              |      commit MB #...     |
+              |      commit MB #3       |
+              |      commit MB #2       |
+              |      commit MB #1       |
+              └─────────────────────────┘
+
+              prepneme sa na branch bug
+              sme na Feature Branchi  HEAD->(bug, master)
+              ┌─────────────────────────┐
+              |     created FB #1       | <-- HEAD
+              |      commit MB #n       | <-- HEAD
+              |      commit MB #...     |
+              |      commit MB #3       |
+              |      commit MB #2       |
+              |      commit MB #1       |
+              └─────────────────────────┘
+
+              commitneme fixnutie bugu na FB
+              sme na Feature Branchi  HEAD->(bug)
+              ┌─────────────────────────┐
+              |      commit FB #1       | <-- HEAD
+              |      commit MB #n       |
+              |      commit MB #...     |
+              |      commit MB #3       |
+              |      commit MB #2       |
+              |      commit MB #1       |
+              └─────────────────────────┘
+
+              prepneme sa späť na Master Branch
+              sme na Master Branchi  HEAD->(master)
+              ┌─────────────────────────┐
+              |      commit FB #1       |
+              |      commit MB #n       | <-- HEAD
+              |      commit MB #...     |
+              |      commit MB #3       |
+              |      commit MB #2       |
+              |      commit MB #1       |
+              └─────────────────────────┘
+
+Vetvenie a commitovanie
+  - vždy keď vytvoríme zmenu vo vetve X a chceme aby tam tá zmena aj ostala, musíme ju commitnuť.
+      môže sa stať, že vo vetve X vytvoríme zmenu (napr. pridáme súbor a.txt) a prepneme sa do
+      vetve Y, v ktorej pošleme všetky súbory do staging area (použijeme  git add) a následne ich
+      commitneme. Stane sa to, že a.txt bude patriť do vetve Y aj napriek tomu, že súbor sme vytvorili
+      vo vetve X
+
+  
 ┏ ┐
 └ ┛
 
@@ -34,7 +97,7 @@ HEAD
 
 
 
----vytvorenie repozitára na gite, naklonovanie ho na local machine, upravenie repa, pushnutie ho späť na github---
+Git príkazy
 
 git clone git@github.com:sknefi/$name.git
                     - z ssh linku si naklonujeme repo na LM
@@ -116,6 +179,9 @@ git log --oneline   - všetky commity sa vypíšu každý na jeden riadok
 git log -n $num     - $num je premenná, ktorá predstavuje naturálne číslo, ktoré nám hovorí koľko záznamov sa má vypísať
                     - keď bude $num = 3, tak sa vypíšu 3 najnovšie commity (master a dva za ním)
 
+git log --all --graph --oneline --decorate
+                    - grafické zobrazenie celého .git stromu
+
 git show $hash      - $hash je premenná
                     - keď vypíšeme záznam commitov (log alebo log --oneline) tak sa nám označí hash pre daný commit
                     - v show vidíme čo sa v danom commite zmenili (porovnáme aktuálne verziu a verziu pred aktuálnou)
@@ -133,8 +199,59 @@ git branch          - vypísanie všetkych branchov
 
 git branch $name    - vytvorenie branche s názvom $name
 
-git switch $name    - prenínanie sa medzi brenchmi, $name predstavuje názov branchu, do ktorého sa chceme prepnúť
+git branch -d $name - vymazanie brenchu s názvom $name
 
+git branch -D $name - vymazanie branchu s názvom $name, ktorý ešte nebol mergenutý
+
+git branch -m "$newName"
+                    - '-m' znamená move
+                    - týmto príkazom zmeníme názov branche, na ktorej sa práve nachádzame
+
+git switch $branchName    
+                    - prenínanie sa medzi brenchmi, $branchName predstavuje názov branchu, do ktorého sa chceme prepnúť
+
+
+git switch -c $branchName  
+                    - $name je premenná pre názov branche, ktorú chceme vytvoriť
+                    - '-c' znamená create
+                    - takže celý príkaz znamená vytvor branch s názvom $branchName a rovno nás tam prepni
+
+git checkout $branchName  
+                    - prepne nás na branch s názvom $branchName
+                    - ekvivalent  git switch $name
+                    - switch je novší
+
+git merge $branchName
+                    - tento typ mergeu sa nazýva fast-forward merge
+                    - vyzerá takto:ä
+                    
+                  ┏                                                                     ┐
+                    MB -> Master Branch
+                    FB -> Feature Branch
+                    .num -> číslo commitu 
+                             ( .1 -> prvý commit
+                               .n -> najnovší commit )
+
+                    pred mergeom
+                    existuje 2 HEADs:
+                                  MB.4 je master HEAD
+                                  FB.2 je feature HEAD
+                                  
+                    MB.1 ---- MB.2 ---- MB.3 ---- MB.4 
+                                                    \ 
+                                                      \____ FB.1 _____ FB.2
+                                                      
+                    -------------------------------------------------------------------
+                    
+                    po merge
+                    MB.1 ---- MB.2 ---- MB.3 ---- MB.4 ---- newMB.1 ---- newMB.2
+
+                    Feature Branche (FB.1 a FB.2) sa stali nové master branche
+                    newMB.1 = FB.1
+                    newMB.2 = FB.2
+
+                    takže teraz existuje iba jeden HEAD a tým je newMB.2 (master HEAD)
+                  └                                                                     ┛
 
 git push            - pošleme repo na github kde je hostovaný remotne
                     - je presne to isté ako "git push origin master"

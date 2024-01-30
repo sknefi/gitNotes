@@ -3,6 +3,7 @@ David Šetek tutorail -    https://www.youtube.com/watch?v=_qSB6jN4A3s&list=PLQ8
 David Šetek poznámky -    https://docs.google.com/document/d/1iA0e_FcqB6Dwj3fULfedrd_PJavByYYXoIDY_yOupFs/edit
 
 čím lepšie si spíšeš ťahák, tým je menšia šanca, že ho použiješ
+pozrieť nejaké grafické prostredie na Git
 
 Git
   - beží na našej lokálnej mašine (LM)
@@ -12,6 +13,9 @@ GitHub
   - cloud, na kotrý umiestňujeme repozitáre, ktoré obsahujú postupne vyvýjanie nášho projektu
   - použijeme ho v tedy keď chceme mať zálohované súbory / pracujeme v tíme a potrebujeme medzi sebou zdielať kód
   - môžme to považovať ako sociálnu sieť
+
+HEAD
+  - posledný commit v aktuálnej brenchi
 
 ┏ ┐
 └ ┛
@@ -43,16 +47,22 @@ rm -rf .git         - vymaže git z repa v LM
 
 git init            - inicializácia .git do daného repozitára
 
+.gitignore          - v repe, ktorý sme inicializovali ako .git môžeme vytvoriť súbor .gitinit (bez prípony),
+                        ktorý nám hovorí, ktoré súbory sa majú ignorovať pri commite
+                    - keď vytvoríme .gitignore musíme ho commitnuť  git commit -m "Vytvorenie .gitignore"
+                    - do .gitignore môžeme písať súbory a zložky, ktoré chceme aby boli ignorované, napr.
+                          1. secrets.txt
+                          2. myFolder/
+                    
+
 git status          - zobrazí čo všetky som zmenili v rámci repozitára
                     - keď sa dačo zmení dostaneme v termináli správu "modified"
                     - keď pridáme file v termináli sa vypíše "untracked" to znamená, že .git nepozná
                         a nepozná tento file (je netrekovaný). Pridáme ho pomocou git add
 
-git add .
-                    - bodka znamená pridaj všetko
+git add .           - bodka znamená pridaj všetko
                     
-git add $filename
-                    - pridanie súboru, ktorý sa nachádza v danom repo (/gitNotes/index.html)
+git add $filename   - pridanie súboru, ktorý sa nachádza v danom repo (/gitNotes/index.html)
  
 git commit -m ""    - vždy keď commitujeme repo musíme zadať -m "" čo predstavuje správu
                     - vždy keď commitneme tak sa commitne celý repo
@@ -72,7 +82,7 @@ git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM
               | h j k l     move LEFT DOWN UP RIGHT                    |
               | w b         move on beggining of RIGHT LEFT _word_     |
               | gg G        move on START END of a _file_              | 
-              | 0 $         move START END of a _current line_         |
+              | 0 $         move on START END of a _current line_      |
               | i a         goto insert BEFORE AFTER _cursor_          |
               | o O         goto instert _one line_ UNDER ABOVE        |
               | x X         delete one character AFTER BEFORE _cursor_ |
@@ -83,6 +93,18 @@ git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM
               | n N         show NEXT PREVIOUS _result_ from search    |
               └────────────────────────────────────────────────────────┘ 
                       
+git commit --amend  - pridanie nových zmien (nového - tohto commitu) ku poslednému commitu
+                    - pridá zmeny ale vždy iba k POSLEDNÉMU commitu
+                    - predstavme si to na príklade: 
+                          1. vytvoríme dva súbory (a.txt, b.txt) 
+                          2. súbor a.txt pošleme do staging area pomocou git add a.txt (nepoužijeme git add .)
+                          3. myslíme si, že v staging area sú oba súbory (a.txt aj b.txt), ale my sme addli len súbor a.txt
+                          4. commitneme:  git commit -m "Vytvorenie nových súborov a.txt a b.txt"   (!b.txt tam nie je!)
+                          5. neskôr si všimeneme, že v commite je len a.txt, ale my sme vytvorili commit, do ktorého sme napísali,
+                                že sme pridali oba súbory
+                          6. do staging area pošleme súbor b.txt:  git add b.txt
+                          7. pomocou  git commit --amend  pridáme súbor b.txt do main commitu (najskôr sa otvorí textový editor
+                                v ktorom môžeme zmeniť message pre commit a po zavretí súboru máme updatenutý main commit)
 
 git log             - vidíme všetky naše commity (najstarší na najnižšie)
                     - vypísanie dlhého hashu pre commit
@@ -91,6 +113,9 @@ git log --oneline   - všetky commity sa vypíšu každý na jeden riadok
                     - vypísanie krátkeho hashu pre commit
                     - prehliadnejší kód (--oneline sa nazýva OPTION)
 
+git log -n $num     - $num je premenná, ktorá predstavuje naturálne číslo, ktoré nám hovorí koľko záznamov sa má vypísať
+                    - keď bude $num = 3, tak sa vypíšu 3 najnovšie commity (master a dva za ním)
+
 git show $hash      - $hash je premenná
                     - keď vypíšeme záznam commitov (log alebo log --oneline) tak sa nám označí hash pre daný commit
                     - v show vidíme čo sa v danom commite zmenili (porovnáme aktuálne verziu a verziu pred aktuálnou)
@@ -98,16 +123,26 @@ git show $hash      - $hash je premenná
 git checkout $hash  - $hash je premenná
                     - môžme použiť buď krátky alebo dlhý hash, funguju oba
                     - vrátime sa k danej verzii (záleží aký hash sme použili) repa
-                    - !POZOR! teraz keď napíšeme "git log" vypíšu sa iba staršie commity ako je tento aktuálny
+                    - !POZOR! teraz keď napíšeme "git log" vypíšu sa iba staršie commity ako je tento aktuálny,
+                        vnímajme to tak, že sme sa vrátili v čase
                     
 git checkout master - preto keď sa chceme vratiť k poslednému commitu (master/main/default/...) tak použijeme tento príkaz
                     - teraz keď napíšeme "git log" tak uvidíme COMPLET všetky commity (od najstaršieho po najnovší->master)
+
+git branch          - vypísanie všetkych branchov
+
+git branch $name    - vytvorenie branche s názvom $name
+
+git switch $name    - prenínanie sa medzi brenchmi, $name predstavuje názov branchu, do ktorého sa chceme prepnúť
 
 
 git push            - pošleme repo na github kde je hostovaný remotne
                     - je presne to isté ako "git push origin master"
                     - kde origin predstavuje lokáciu git repa 
                     - master predstavuje branch, na ktorú pushujeme
+
+
+
 
 
 ---vytváranie lokálneho repa, pridanie referencie na github repo, commitnutie repa na LM, pushnutie LM repa---

@@ -3,7 +3,7 @@ David Šetek tutorail -    https://www.youtube.com/watch?v=_qSB6jN4A3s&list=PLQ8
 David Šetek poznámky -    https://docs.google.com/document/d/1iA0e_FcqB6Dwj3fULfedrd_PJavByYYXoIDY_yOupFs/edit
 
 čím lepšie si spíšeš ťahák, tým je menšia šanca, že ho použiješ
-pozrieť nejaké grafické prostredie na Git
+pozrieť ako funguje .git od informatika s mišom
 
 Git
   - beží na našej lokálnej mašine (LM)
@@ -79,7 +79,35 @@ Vetvenie a commitovanie
       commitneme. Stane sa to, že a.txt bude patriť do vetve Y aj napriek tomu, že súbor sme vytvorili
       vo vetve X
 
-  
+.git konflikt (pri mergeovaní)
+  -  čo je konflikt? predstavme si, že:
+
+    GRAF
+      šípka ( -> ) znamená commit
+      pipa  ( |  ) predstavuje hranu medzi commitmy
+      kruh  ( O  ) predstavuje commit 
+
+      ┏                                                                 ┐
+         MB  FB
+         
+          O        -> Pridanie textu na prvý riadok "Ahoj" do a.txt
+          |
+          |  O     -> Pridanie textu na prvý riadok "Zdarec" do a.txt
+          | /
+          O        -> Vytvorenie a.txt
+      └                                                                 ┛
+
+  takže v súbore a.txt je v MB napísané "Ahoj" a vo FB "zdarec", tu nastáva spor, keďže keď budeme chcieť mergenuť
+    tieto branche tak .git nevie čo tam má reálne napísať (či tam nechá text z MB (Ahoj) alebo z FB (Zdarec))
+
+  vychádzajme z našej schémy, ktorú sme uviedli vyššie
+  do MB napíšeme   git merge featureBranch
+  1. v terminály sa nám vypíše "Merge conflict in a.txt" 
+  2. automaticky sa nám otvorí súbor a.txt (keď nie tak si ho otvoríme manuálne)
+  3. v a.txt upravíme text tak ako chceme aby bol po úspešnom merge a zavrenem daný súbor (a.txt)
+  4. zavretím sa zmeny uložia a obsah v a.txt bude taký ako sme ho upravili
+  5. na záver musíme commitnuť a.txt (pre úspešný merge)
+
 ┏ ┐
 └ ┛
 
@@ -158,6 +186,8 @@ git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM
                       
 git commit --amend  - pridanie nových zmien (nového - tohto commitu) ku poslednému commitu
                     - pridá zmeny ale vždy iba k POSLEDNÉMU commitu
+                    - tento príkaz môžme použiť keď chceme zmeniť message commitu pri mergi (lebo posledný commit v Master Branchi
+                        je commit MERGE s default message (Merge branch '$branchName'))
                     - predstavme si to na príklade: 
                           1. vytvoríme dva súbory (a.txt, b.txt) 
                           2. súbor a.txt pošleme do staging area pomocou git add a.txt (nepoužijeme git add .)
@@ -305,6 +335,45 @@ git merge $branchName
                     FB.2)
                     
               └                                                                                   ┛
+
+git reset --hard HEAD^
+                   - vymazanie posledného commitu, úplne
+
+                     pred reset --hard
+                     MB.4 je HEAD
+                     ┏                                       ┐
+                        MB.1 ---- MB.2 ---- MB.3 ---- MB.4 
+                     └                                       ┛
+                     
+                     po reset --hard
+                     MB.3 je nová HEAD
+                     SB.1 (Side Branch)
+                     ┏                                       ┐
+                        MB.1 ---- MB.2 ---- MB.3 
+                                              \___SB.1  
+                                            (staged changes)
+                     └                                       ┛
+                     
+git reset --soft HEAD^
+                   - vymazanie posledného commitu z danej branche a pridanie ho do vedľajšej branche
+
+                     pred reset --soft
+                     MB.4 je HEAD
+                     ┏                                       ┐
+                        MB.1 ---- MB.2 ---- MB.3 ---- MB.4 
+                     └                                       ┛
+                     
+                     po reset --soft
+                     MB.3 je nová HEAD
+                     ┏                                       ┐
+                        MB.1 ---- MB.2 ---- MB.3 
+                                                                                         
+                     └                                       ┛
+                     
+                     
+
+
+                     
 
 git push            - pošleme repo na github kde je hostovaný remotne
                     - je presne to isté ako "git push origin master"

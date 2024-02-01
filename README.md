@@ -222,10 +222,11 @@ git checkout $branchName
                     - switch je novší
 
 git merge $branchName
-                    - tento typ mergeu sa nazýva fast-forward merge
-                    - vyzerá takto:ä
+                    - vyzerá takto:
                     
               ┏                                                                                   ┐
+                    FAST FORWARD
+                    
                     MB -> Master Branch
                     FB -> Feature Branch
                     .num -> číslo commitu 
@@ -261,6 +262,47 @@ git merge $branchName
                       vypíše, že   newMB.2 (HEAD -> master, Feature Branch)
                     a keď budeme na Feature branchi tak nám vypíše
                                    newMB.2 (HEAD -> Feature Branch, master)
+                    
+              └                                                                                   ┛
+              
+              ┏                                                                                   ┐
+                    NON FAST FORWARD
+                    
+                    MB -> Master Branch
+                    FB -> Feature Branch
+                    .num -> číslo commitu 
+                             ( .1 -> prvý commit
+                               .n -> najnovší commit )
+                    napr. MB.2 -> Master Branch commit číslo 2
+                    MERGE znamená spojenie 2 branchov
+                  
+                    pred mergeom
+                    existuje 2 HEADs:
+                                  MB.4 je master HEAD
+                                  FB.2 je feature HEAD
+                                  
+                     ┏                                                                ┐
+                        MB.1 ------- MB.2 ------- MB.3 ------- MB.4
+                                                    \ 
+                                                      \__ FB.1 ___ FB.2 
+                     └                                                                ┛
+                                                      
+                    -------------------------------------------------------------------
+                    
+                    po merge
+                     ┏                                                                ┐
+                        MB.1 ------- MB.2 ------- MB.3 ------- MB.4 ------- MERGE
+                                                    \                   (MB.4 + FB.2)
+                                                      \__ FB.1 ___ FB.2 ___ /
+                     └                                                                ┛
+
+                    
+                    Master Branch má len jednu hlavu a tou je MERGE (takže najnovší merge na MB)
+                    Feature Branch má svoju hlavu a tou je posledný commit na FB takže FB.2
+
+                    Takže merge s názvom MERGE na Master Branchi je spojenie posledného MB 
+                    commitu (takže MB.4) spolu s posledným commitom na Feature Branchi (takže
+                    FB.2)
                     
               └                                                                                   ┛
 

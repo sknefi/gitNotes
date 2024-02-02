@@ -164,7 +164,7 @@ git commit -m "" -m ""      - prvé -m "" predstavuje správu
                             - druhé -m "" predstavuje description
 
 git commit          - otvorí defaultne nastavený textový editor (na MacOS VIM)
-                    - správu môžeme napísať vo vime, v prípade, že sa nám ju nechce písať
+                    - správu môžeme napísať vo VIMe, v prípade, že sa nám ju nechce písať
                         v do jedného riadku keď používame " git commit -m "" "
                     - podstatná vec, ako sa orientovať vo VIMe 
 
@@ -369,11 +369,71 @@ git reset --soft HEAD^
                         MB.1 ---- MB.2 ---- MB.3 
                                                                                          
                      └                                       ┛
-                     
-                     
 
+git diff           - rozdiel medzi aktuálnym repo a repom z posledného commitu
 
+git diff --staged  - rozdielm medzi repom v staging area (add-nutým repom) a repom z posledného commitu
+
+git diff $hashCommit1..$hashCommit2
+git diff $hashCommit1 $hashCommit2
+                   - príkazy robia presne to isté, ale je zvykom, že v .git prostredí sa používa skôr ten prvý príkaz (s dvomi bodkami)
+                   - vypíše rozdiel medzi commitom s hashom $hashCommit1 a commitom s hashom $hashCommit2
+
+git diff $hashCommit1..$hashCommit2 $fileName
+git diff $hashCommit1 $hashCommit2
+                   - príkazy robia presne to isté, ale je zvykom, že v .git prostredí sa používa skôr ten prvý príkaz (s dvomi bodkami)
+                   - vypíše rozdiel medzi súborom $fileName z commitu s hashom $hashCommit1 a súborom $fileName z commitu s hashom $hashCommit2
+                   - do prikázu môžeme pridať súborov koľko chceme:
+                          git diff $hashCommit1..$hashCommit2 $fileName1 $fileName2 ... $fileNameN
                      
+gid diff $branch1Name..$branch2Name
+gid diff $branch1Name $branch2Name
+                   - príkazy robia presne to isté, ale je zvykom, že v .git prostredí sa používa skôr ten prvý príkaz (s dvomi bodkami)
+                   - vypíše rozdiel medzi posledným commitom z $branch1Name a posledným commitom z $branch2Name a porovná ich
+
+                  Vysvetlenie čo sa nám vypíše do terminálu keď použiejeme príkaz  git diff
+                  Tento konkrétny diff je medzi 2 branchami (main a bug)
+                    
+                  filip@Filips-MacBook-Air mergeCviko % git diff main bug   | ->
+                  diff --git a/index.html b/index.html                      | ->
+                  index f340910..4169258 100644                             | ->
+                  --- a/index.html                                          | ->
+                  +++ b/index.html                                          | ->
+                  @@ -13,5 +13,8 @@                                         | ->
+                       <p>paragraph</p>
+                       <h2>still smaller text</h2>
+                       <p>paragraph</p>
+                  +
+                  +    <h5>ĎALŠÍ text</h5>
+                  +    <a href="#"><div></div></a>
+                   </body>
+                   </html>
+                  \ No newline at end of file
+                  diff --git a/style.css b/style.css
+                  index d9532d2..2941a15 100644
+                  --- a/style.css
+                  +++ b/style.css
+                  @@ -1,4 +1,18 @@
+                   body{
+                       background-color: black;
+                       color: white;
+                  +}
+                  +
+                  +header {
+                  +    background-color: #4285f4;
+                  +    color: #fff;
+                  +    padding: 20px;
+                  +    text-align: center;
+                  +}
+                  +
+                  +/* Navigation styles */
+                  +nav {
+                  +    display: flex;
+                  +    justify-content: center;
+                  +    background-color: #333;
+                   }
+                  \ No newline at end of file
+  
 
 git push            - pošleme repo na github kde je hostovaný remotne
                     - je presne to isté ako "git push origin master"
